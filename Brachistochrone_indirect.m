@@ -3,14 +3,14 @@ clear;
 clc;
 
 % Parameters
-g = 9.81; % Acceleration (m/s^2)
+g = -9.81; % Acceleration (m/s^2)
 x1 = 0;   
 y1 = 0;   
 x2 = 2;   
 y2 = -2;  
 
 % Initial guess for the solution
-solinit = bvpinit(linspace(x1, x2, 50), @initial_guess);
+solinit = bvpinit(linspace(x1, x2, 100), @initial_guess);
 
 % using bvp4c
 sol = bvp4c(@(x, y) odefun(x, y, g), @bcfun, solinit);
@@ -27,6 +27,7 @@ plot(x1, y1, 'ro', 'MarkerSize', 8, 'LineWidth', 2); % Start point
 plot(x2, y2, 'go', 'MarkerSize', 8, 'LineWidth', 2); % End point
 xlabel('x');
 ylabel('y');
+xlim([x1+0.05, x2]);
 title('Brachistochrone Path (Indirect Method)');
 grid on;
 legend('Brachistochrone Path', 'Start Point', 'End Point');
@@ -54,7 +55,7 @@ end
 %     R = 1;  % Rough estimate for cycloid radius
 %     theta = linspace(0, pi, length(x));  % Parametric angle
 %     yinit = [-R * (1 - cos(theta));   % Cycloid y-coordinate
-%              -R * sin(theta)];        % Cycloid slope dy/dx
+%              -R * (teta-sin(theta))];        % Cycloid slope dy/dx
 % end
 
 function yinit = initial_guess(x)
